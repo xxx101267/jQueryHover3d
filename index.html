@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>hover3d.js-超酷鼠标滑过图片3D卡片效果jQuery插件</title>
+
+<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="css/demo.css">
+<link rel="stylesheet" href="css/style.css">
+
+<!--[if IE]>
+	<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+
+<div class="site-content">
+		<div class="project">
+			<div class="project__card">
+				<a href="" class="project__image"><img src="images/1.jpg" width=600 height=400 alt=""></a>
+				<div class="project__detail">
+					<h2 class="project__title"><a href="#">Project Name</a></h2>
+					<small class="project__category"><a href="#">Photography</a></small>
+				</div>
+			</div>
+		</div>
+</div>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jQuery Hover3d.js" ></script>
+
+<script type="text/javascript">
+
+
+window.addEventListener('deviceorientation',function(e){
+	//var x=Math.round(e.beta);
+	var y=Math.round(e.alpha);
+
+	if(typeof start=='undefined'){//刚刚第一次进入画面时 
+		start=y;
+		last=start;
+		return;
+	}
+	y=y-start;
+
+	if(Math.abs(y-last)>2){//防画面抖动的
+		css(box,'rotateY',y);
+		//css(box,'rotateX',x);
+		last=y;
+	}
+	
+})
+
+
+$(document).ready(function(){
+	$(".project").hover3d({
+		selector: ".project__card",
+		shine: true,
+	});
+
+	$(".movie").hover3d({
+		selector: ".movie__card",
+		shine: true,
+		sensitivity: 20,
+	});
+
+	//hover3d的参数
+	// selector : null,
+	// perspective   : 1000,
+	// sensitivity   : 20,
+	// invert        : false,
+	// shine	      : false,
+	// hoverInClass  : "hover-in",
+	// hoverOutClass : "hover-out"
+
+
+	//核心
+	/*function move(event){
+		var w      = $this.innerWidth(),
+			h      = $this.innerHeight(),
+			ax 	   = settings.invert ?  ( w / 2 - event.offsetX)/settings.sensitivity : -( w / 2 - event.offsetX)/settings.sensitivity,
+			ay     = settings.invert ? -( h / 2 - event.offsetY)/settings.sensitivity :  ( h / 2 - event.offsetY)/settings.sensitivity;
+			dy     = event.offsetY - h / 2,
+			dx     = event.offsetX - w / 2,
+			theta  = Math.atan2(dy, dx),
+			angle  = theta * 180 / Math.PI - 90;
+		
+		//因为上0度 右90度 下180度 左-90度
+		if (angle < 0) {
+			angle  = angle + 360;
+		}
+		
+
+		$card.css({
+			perspective    : settings.perspective+"px",
+			transformStyle : "preserve-3d",
+			transform      : "rotateY("+ax+"deg) rotateX("+ay+"deg)"
+		});
+
+		$shine.css('background', 'linear-gradient(' + angle + 'deg, rgba(255,255,255,' + event.offsetY / h * .5 + ') 0%,rgba(255,255,255,0) 80%)');
+	}*/
+
+
+});
+</script>
+
+</body>
+</html>
